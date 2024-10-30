@@ -164,7 +164,7 @@ output "source_path" {
 }
 
 output "cw_log_expiration" {
-  value = 30
+  value = 7
 }
 
 output "data_bucket_name" {

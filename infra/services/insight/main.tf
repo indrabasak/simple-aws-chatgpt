@@ -36,33 +36,37 @@ variable "vpc_id" {
   type = string
 }
 
-# variable "domain_name" {
-#   type = string
-# }
-#
-# variable "route53_weight" {
-#   type = number
-# }
-#
-# variable "dyTenant" {
-#   type = string
-# }
-#
-# variable "dtClusterId" {
-#   type = string
-# }
-#
-# variable "dtConnectionBaseUrl" {
-#   type = string
-# }
-#
-# variable "auth_token" {
-#   type = string
-# }
+variable "dev_db_host" {
+  type = string
+}
 
-# variable "dynatraceLayer" {
-#   type = string
-# }
+variable "dev_db_port" {
+  type = number
+}
+
+variable "dev_db_user_name" {
+  type = string
+}
+
+variable "dev_db_pwd" {
+  type = string
+}
+
+variable "dev_db_query_string" {
+  type = string
+}
+
+variable "dev_db_cert" {
+  type = string
+}
+
+variable "dev_db_name" {
+  type = string
+}
+
+variable "dev_db_collection_event" {
+  type = string
+}
 
 module "common" {
   source        = "../../modules/common"
@@ -72,4 +76,12 @@ module "common" {
   env           = var.env
   vpc_id        = var.vpc_id
   log_level     = var.log_level
+#   dev_db_host   = var.dev_db_host
+#   dev_db_port   = var.dev_db_port
+#   dev_db_user_name = var.dev_db_user_name
+#   dev_db_pwd    = var.dev_db_pwd
+#   dev_db_query_string = var.dev_db_query_string
+#   dev_db_cert   = var.dev_db_cert
+#   dev_db_name   = var.dev_db_name
+#   dev_db_collection_event = var.dev_db_collection_event
 }

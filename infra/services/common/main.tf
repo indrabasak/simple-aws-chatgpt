@@ -32,26 +32,37 @@ variable "vpc_id" {
   type = string
 }
 
-variable "forge_client_id" {
-  type = string
-}
-
-variable "forge_client_secret" {
-  type = string
-
-}
-
-variable "faros_api_key" {
-  type = string
-}
-
-variable "cloud_dna_client_id" {
-  type = string
-}
-
-variable "cloud_dna_client_secret" {
-  type = string
-}
+# variable "dev_db_host" {
+#     type = string
+# }
+#
+# variable "dev_db_port" {
+#   type = number
+# }
+#
+# variable "dev_db_user_name" {
+#     type = string
+# }
+#
+# variable "dev_db_pwd" {
+#     type = string
+# }
+#
+# variable "dev_db_query_string" {
+#     type = string
+# }
+#
+# variable "dev_db_cert" {
+#     type = string
+# }
+#
+# variable "dev_db_name" {
+#     type = string
+# }
+#
+# variable "dev_db_collection_event" {
+#   type = string
+# }
 
 module "common" {
   source       = "../../modules/common"

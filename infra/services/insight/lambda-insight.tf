@@ -1,42 +1,16 @@
 locals {
     insight_name   = "insight"
     insight_prefix = "${module.common.app_name}-${local.insight_name}"
-#     insight_env_vars = merge(
-#         module.common.environment_variables,
-#         {
-#             DT_TAGS = "ServiceAlias=${var.servicealias} ServiceID=${var.serviceid} Moniker=${var.moniker}",
-#             AWS_LAMBDA_EXEC_WRAPPER = "/opt/dynatrace"
-#             DT_TENANT = var.dyTenant,
-#             DT_CLUSTER_ID = var.dtClusterId,
-#             DT_CONNECTION_BASE_URL = var.dtConnectionBaseUrl,
-#             DT_CONNECTION_AUTH_TOKEN = var.auth_token,
-#             DT_LAYER_ARN = var.dynatraceLayer,
-#             DT_OPEN_TELEMETRY_ENABLE_INTEGRATION = "false"
-#         } // Add additional environment variables here
-#     )
-#     insight_policy_statements = merge(
-#         module.common.inline_policy,
-#         {
-#             dynamodb = {
-#                 "effect" = "Allow",
-#                 "actions" = [
-#                     "dynamodb:BatchGetItem",
-#                     "dynamodb:GetItem",
-#                     "dynamodb:Query",
-#                     "dynamodb:Scan",
-#                     "dynamodb:BatchWriteItem",
-#                     "dynamodb:PutItem",
-#                     "dynamodb:UpdateItem",
-#                     "dynamodb:DeleteItem"
-#                 ],
-#                 "resources" = ["arn:aws:dynamodb:*:*:table/pde-exception-*"]
-#             }
-#         }
-#     )
+    insight_env_vars = merge(
+        module.common.environment_variables,
+        {
+            DB_DEV_SECRET = module.db_dev_secret.secret_name,
+        }
+    )
 
     insight_policy_statements = merge(
         module.common.inline_policy,
-        {} // Add additional inline policy statements here
+        {}
     )
 }
 
@@ -45,6 +19,22 @@ module "insight_sg" {
     name   = local.insight_name
     vpc_id = module.common.vpc_id
     tags   = module.common.tags
+}
+
+module "db_dev_secret" {
+    source = "../../modules/secret-manager/"
+    name   = "${module.common.app_name}-db-dev"
+    tags   = module.common.tags
+    secret = {
+        DB_HOST             = "${var.dev_db_host}"
+        DB_PORT             = "${var.dev_db_port}"
+        DB_USER_NAME        = "${var.dev_db_user_name}"
+        DB_PWD              = "${var.dev_db_pwd}"
+        DB_QUERY_STRING     = "${var.dev_db_query_string}"
+        DB_CERT             = "${var.dev_db_cert}"
+        DB_NAME             = "${var.dev_db_name}"
+        DB_COLLECTION_EVENT = "${var.dev_db_collection_event}"
+    }
 }
 
 module "insight_function" {
@@ -57,7 +47,7 @@ module "insight_function" {
     source_path                       = "${module.common.source_path}/${local.insight_name}"
     artifacts_dir                     = module.common.artifacts_dir
     publish                           = true
-#     environment_variables             = local.insight_env_vars
+    environment_variables             = local.insight_env_vars
     vpc_subnet_ids                    = module.common.subnet_ids
     vpc_security_group_ids            = [module.insight_sg.id]
     role_name                         = "${local.insight_prefix}-${module.common.region}"
