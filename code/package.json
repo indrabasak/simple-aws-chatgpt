@@ -5,7 +5,7 @@
   "license": "ISC",
   "packageManager": "yarn@1.22.22",
   "scripts": {
-    "dist:insight": "rm -rf dist && yarn build:insight && yarn build:layer",
+    "dist:insight": "rm -rf dist && yarn build:insight && yarn build:layer && cp global-bundle.pem dist/lambda-functions/insight",
     "build:insight": "tsc --project src/insight",
     "build:layer": "mkdir -p dist/lambda-functions/layer/nodejs && cp package.json yarn.lock dist/lambda-functions/layer/nodejs && cd dist/lambda-functions/layer/nodejs && yarn install --prod --frozen-lockfile",
     "lint": "eslint src/**/*.ts",
@@ -45,21 +45,11 @@
     "typescript": "^5.4.5"
   },
   "dependencies": {
-    "@apollo/server": "^4.11.0",
-    "@as-integrations/aws-lambda": "^3.1.0",
     "@aws-lambda-powertools/batch": "^2.2.0",
     "@aws-lambda-powertools/logger": "^2.1.1",
     "@aws-lambda-powertools/parameters": "^2.2.0",
-    "@aws-sdk/client-dynamodb": "^3.650.0",
-    "@aws-sdk/client-s3": "^3.613.0",
     "@aws-sdk/client-secrets-manager": "^3.596.0",
-    "@aws-sdk/client-sqs": "^3.596.0",
-    "@aws-sdk/lib-dynamodb": "^3.650.0",
-    "axios": "^1.6.7",
-    "jsonwebtoken": "^9.0.2",
-    "jwks-rsa": "^3.1.0",
-    "lambda-api": "^1.1.0",
     "lodash": "^4.17.21",
-    "uuid": "^10.0.0"
+    "mongodb": "^6.10.0"
   }
 }
