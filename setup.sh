@@ -46,6 +46,33 @@ terraformDeploy() {
   echo "terraformDeploy - 8"
 }
 
+terraformDestroy() {
+  echo "terraformDestroy - 1"
+  echo "checking terraform backend bucket exists: ${BACKEND_BUCKET}"
+
+    cd "$BACKEND_DIR" || exit
+
+    aws s3api head-bucket --bucket "${BACKEND_BUCKET}" 2>/dev/null
+    backendExists=$?
+
+    echo "terraformDestroy - 2"
+    echo $backendExists
+
+    if [ $backendExists -ge 0 ]; then
+        cd ..
+        cd services/insight || exit
+        echo "Current directory: $(pwd)"
+        echo "terraformDestroy - 5"
+        terraform init -reconfigure -backend-config="bucket=${BACKEND_BUCKET}"
+        echo "terraformDestroy - 6"
+        terraform plan -lock=true --var-file="../${VAR_FILE_PATH}"
+        echo "terraformDestroy - 7"
+        terraform destroy -lock=true -auto-approve --var-file="../${VAR_FILE_PATH}"
+    fi
+
+    echo "terraformDestroy - 8"
+}
+
 if [ "$1" = "deploy" ]; then
     echo "deployment started"
     terraformDeploy

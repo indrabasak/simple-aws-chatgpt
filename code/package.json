@@ -6,7 +6,9 @@
   "packageManager": "yarn@1.22.22",
   "scripts": {
     "dist:insight": "rm -rf dist && yarn build:insight && yarn build:layer && cp global-bundle.pem dist/lambda-functions/insight",
+    "dist:ignore": "rm -rf dist && yarn build:ignore && yarn build:layer && cp global-bundle.pem dist/lambda-functions/ignore",
     "build:insight": "tsc --project src/insight",
+    "build:ignore": "tsc --project src/ignore",
     "build:layer": "mkdir -p dist/lambda-functions/layer/nodejs && cp package.json yarn.lock dist/lambda-functions/layer/nodejs && cd dist/lambda-functions/layer/nodejs && yarn install --prod --frozen-lockfile",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
@@ -49,6 +51,11 @@
     "@aws-lambda-powertools/logger": "^2.1.1",
     "@aws-lambda-powertools/parameters": "^2.2.0",
     "@aws-sdk/client-secrets-manager": "^3.596.0",
+    "@azure/identity": "^4.4.1",
+    "@langchain/community": "^0.3.1",
+    "@langchain/core": "^0.3.11",
+    "@langchain/openai": "^0.3.0",
+    "@langchain/textsplitters": "^0.1.0",
     "lodash": "^4.17.21",
     "mongodb": "^6.10.0"
   }
