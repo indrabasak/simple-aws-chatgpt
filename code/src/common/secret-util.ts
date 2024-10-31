@@ -1,3 +1,9 @@
+/**
+ * Utility class to retrieve secrets from AWS Secrets Manager.
+ *
+ * @author Indra Basak
+ * @since 2024-10-29
+ */
 import { getSecret } from '@aws-lambda-powertools/parameters/secrets';
 import { appLogger } from './logger';
 
@@ -5,6 +11,10 @@ const logger = appLogger().createChild();
 logger.appendKeys({ executor: 'common/secret-util' });
 
 export class SecretUtil {
+  /**
+   * Retrieve a secret from AWS Secrets Manager.
+   * @param secretName
+   */
   static async getSecret(secretName: string): Promise<any> {
     try {
       logger.debug(`Retrieving secret ${secretName}`);

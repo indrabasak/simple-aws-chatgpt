@@ -1,14 +1,25 @@
+/**
+ * This is the main entry point Lambda code for the Insight API.
+ *
+ * @author Indra Basak
+ * @since 2024-10-29
+ */
 import { APIGatewayEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
 import { appLogger } from '../common/logger';
 import { SecretUtil } from '../common/secret-util';
 import { MongoUtil } from '../common/mongo-util';
 import { EventChatbot } from '../common/event-chatbot';
-import axios from 'axios';
 
 const logger = appLogger();
 
 let bot: EventChatbot;
 
+/**
+ * Lambda handler function to answer questions.
+ *
+ * @param event  the incoming event
+ * @param context the Lambda context
+ */
 export const handler: APIGatewayProxyHandler = async (
   event: APIGatewayEvent,
   context: Context,

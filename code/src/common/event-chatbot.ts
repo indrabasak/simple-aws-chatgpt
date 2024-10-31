@@ -1,3 +1,9 @@
+/**
+ * This class is responsible for handling the chatbot logic for the Event Chatbot.
+ *
+ * @author Indra Basak
+ * @since 2024-10-29
+ */
 import { ClientSecretCredential, getBearerTokenProvider } from '@azure/identity';
 import { AzureChatOpenAI } from '@langchain/openai';
 import { ChatPromptTemplate } from '@langchain/core/prompts';
@@ -12,6 +18,19 @@ export class EventChatbot {
   private queryGenerationPrompt: ChatPromptTemplate;
   private completeChain: RunnableSequence;
 
+  /**
+   * Constructor for the Event Chatbot.
+   *
+   * @param azureTenantId Azure tenant id
+   * @param azureClientId Azure client id
+   * @param azureClientSecret Azure client secret
+   * @param azureAuthorityHost Azure authority host
+   * @param azureOpenAIApiInstanceName Azure openai api instance name
+   * @param azureOpenAIApiDeploymentName Azure openai api deployment name
+   * @param azureOpenAIApiVersion Azure openai api version
+   * @param mongoUtil MongoDB utility
+   * @param collection MongoDB collection name
+   */
   constructor(
     azureTenantId: string,
     azureClientId: string,
@@ -73,16 +92,18 @@ export class EventChatbot {
     }
   }
 
+  /**
+   * Test the query generation prompt to improve the prompt quality.
+   *
+   * @param question Question to test the query generation prompt
+   */
   public async testQueryGenPrompt(question: string | null) {
     let result: string = 'We are unable to answer your question at this time.';
     try {
-      console.log('-----testQueryGenPrompt-----1');
       const chain = this.queryGenerationPrompt.pipe(this.model);
-      console.log('-----testQueryGenPrompt-----2');
       const chainResult = await chain.invoke({
         question,
       });
-      console.log('-----testQueryGenPrompt-----3');
       result = chainResult.content.toString();
     } catch (error) {
       console.error('Error running EventChatbot:', error);
@@ -92,6 +113,11 @@ export class EventChatbot {
     return result;
   }
 
+  /**
+   * Answer a question using the Event Chatbot.
+   *
+   * @param question Question to answer
+   */
   public async answerQuestion(question: string | null): Promise<string> {
     let result: string = 'We are unable to answer your question at this time.';
     console.log('-----answerQuestion-----1');
@@ -113,6 +139,9 @@ export class EventChatbot {
     return result;
   }
 
+  /**
+   * Close the Event Chatbot.
+   */
   public async close() {
     await this.mongoUtil.close();
   }
