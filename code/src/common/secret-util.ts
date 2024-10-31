@@ -5,9 +5,9 @@
  * @since 2024-10-29
  */
 import { getSecret } from '@aws-lambda-powertools/parameters/secrets';
-import { appLogger } from './logger';
+import { AppLogger } from './logger';
 
-const logger = appLogger().createChild();
+const logger = AppLogger.getInstance().createChild();
 logger.appendKeys({ executor: 'common/secret-util' });
 
 export class SecretUtil {

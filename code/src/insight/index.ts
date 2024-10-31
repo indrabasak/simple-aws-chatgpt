@@ -5,12 +5,12 @@
  * @since 2024-10-29
  */
 import { APIGatewayEvent, APIGatewayProxyHandler, APIGatewayProxyResult, Context } from 'aws-lambda';
-import { appLogger } from '../common/logger';
+import { AppLogger } from '../common/logger';
 import { SecretUtil } from '../common/secret-util';
 import { MongoUtil } from '../common/mongo-util';
 import { EventChatbot } from '../common/event-chatbot';
 
-const logger = appLogger();
+const logger = AppLogger.getInstance();
 
 let bot: EventChatbot;
 

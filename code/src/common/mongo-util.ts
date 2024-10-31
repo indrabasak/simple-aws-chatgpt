@@ -7,10 +7,10 @@
  */
 
 import { Db, MongoClient } from 'mongodb';
-import { appLogger } from './logger';
 import fs from 'node:fs';
+import { AppLogger } from './logger';
 
-const logger = appLogger().createChild();
+const logger = AppLogger.getInstance();
 logger.appendKeys({ executor: 'common/mongo-util' });
 
 export class MongoUtil {
