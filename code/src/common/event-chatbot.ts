@@ -22,6 +22,15 @@ export class EventChatbot {
     collection: string,
   ) {
     try {
+      console.log('azureTenantId', azureTenantId);
+      console.log('azureClientId', azureClientId);
+      console.log('azureClientSecret', azureClientSecret);
+      console.log('azureAuthorityHost', azureAuthorityHost);
+      console.log('azureOpenAIApiInstanceName', azureOpenAIApiInstanceName);
+      console.log('azureOpenAIApiDeploymentName', azureOpenAIApiDeploymentName);
+      console.log('azureOpenAIApiVersion', azureOpenAIApiVersion);
+      console.log('collection', collection);
+
       this.mongoUtil = mongoUtil;
 
       const credential = new ClientSecretCredential(azureTenantId, azureClientId, azureClientSecret, {
@@ -62,10 +71,19 @@ export class EventChatbot {
     }
   }
 
-  public async answerQuestion(question: string): Promise<string> {
+  public async answerQuestion(question: string | null): Promise<string> {
     let result: string = 'We are unable to answer your question at this time.';
+    console.log('-----answerQuestion-----1');
+
+    if (question === null) {
+      console.log('-----answerQuestion-----2');
+      return result;
+    }
+
     try {
+      console.log('-----answerQuestion-----3');
       result = await this.completeChain.invoke({ question });
+      console.log('-----answerQuestion-----4');
     } catch (error) {
       console.error('Error running EventChatbot:', error);
       throw new Error('Failed to run EventChatbot');
@@ -75,6 +93,6 @@ export class EventChatbot {
   }
 
   public async close() {
-    await this.mongoUtil.close()
+    await this.mongoUtil.close();
   }
 }

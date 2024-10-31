@@ -1,13 +1,12 @@
 #!/bin/bash
 
-BASE_NAME="simple-aws-chatgpt"
+BASE_NAME="simple-aws-chatbot"
 TARGET_REGION="us-west-2"
-TARGET_ENVIRONMENT="sbx"
-BUCKET_NAME="sbx-simple-aws-chatgpt-state-us-west-2"
+TARGET_ENVIRONMENT="dev"
 
 BACKEND_DIR="./infra/state"
-BACKEND_BUCKET="simple-aws-chatgpt-tfstate-sbx-us-west-2"
-VAR_FILE_PATH="../environments/us-west-2/sbx.tfvars"
+BACKEND_BUCKET="${TARGET_ENVIRONMENT}-${BASE_NAME}-state-${TARGET_REGION}"
+VAR_FILE_PATH="../environments/us-west-2/${TARGET_ENVIRONMENT}.tfvars"
 
 usage() {
     echo "<deploy|destroy>"

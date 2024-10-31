@@ -5,6 +5,7 @@ locals {
         module.common.environment_variables,
         {
             DB_DEV_SECRET = module.db_dev_secret.secret_name,
+            OPENAI_SECRET = module.openai_secret.secret_name
         }
     )
 
@@ -34,6 +35,22 @@ module "db_dev_secret" {
         DB_CERT             = "${var.dev_db_cert}"
         DB_NAME             = "${var.dev_db_name}"
         DB_COLLECTION_EVENT = "${var.dev_db_collection_event}"
+    }
+}
+
+module "openai_secret" {
+    source = "../../modules/secret-manager/"
+    name   = "${module.common.app_name}-openai"
+    tags   = module.common.tags
+    secret = {
+        AZURE_OPENAI_API_INSTANCE_NAME    = "${var.azure_openai_api_instance_name}"
+        AZURE_OPENAI_API_DEPLOYMENT_NAME  = "${var.azure_openai_api_deployment_name}"
+        AZURE_OPENAI_API_VERSION          = "${var.azure_openai_api_version}"
+        AZURE_AUTHORITY_HOST              = "${var.azure_authority_host}"
+        AZURE_FEDERATED_TOKEN_FILE        = "${var.azure_federated_token_file}"
+        AZURE_TENANT_ID                   = "${var.azure_tenant_id}"
+        AZURE_CLIENT_ID                   = "${var.azure_client_id}"
+        AZURE_CLIENT_SECRET               = "${var.azure_client_secret}"
     }
 }
 

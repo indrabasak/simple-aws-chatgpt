@@ -7,7 +7,7 @@ terraform {
     }
   }
   backend "s3" {
-    key     = "exceptions/main.tfstate"
+    key     = "insight/main.tfstate"
     encrypt = true
   }
 }
@@ -65,6 +65,38 @@ variable "dev_db_name" {
 }
 
 variable "dev_db_collection_event" {
+  type = string
+}
+
+variable "azure_openai_api_instance_name" {
+  type = string
+}
+
+variable "azure_openai_api_deployment_name" {
+  type = string
+}
+
+variable "azure_openai_api_version" {
+  type = string
+}
+
+variable "azure_authority_host" {
+  type = string
+}
+
+variable "azure_federated_token_file" {
+  type = string
+}
+
+variable "azure_tenant_id" {
+  type = string
+}
+
+variable "azure_client_id" {
+  type = string
+}
+
+variable "azure_client_secret" {
   type = string
 }
 

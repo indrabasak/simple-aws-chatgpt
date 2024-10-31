@@ -78,7 +78,7 @@ data "aws_subnets" "selected" {
 
   filter {
     name   = "tag:Name"
-    values = ["*_app1_*"]
+    values = ["*_app2_*"]
   }
 }
 
@@ -133,7 +133,7 @@ output "vpc_id" {
 }
 
 output "subnet_ids" {
-  value = data.aws_subnets.selected.ids
+   value = data.aws_subnets.selected.ids
 }
 
 output "environment_variables" {
