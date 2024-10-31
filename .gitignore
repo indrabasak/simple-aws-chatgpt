@@ -183,15 +183,13 @@ dist
 /vars/tfbackend.groovy
 /.idea/vcs.xml
 /infra/environments/us-west-2/sbx.tfvars
-!/code/src/ignore/event-chatbot-test.ts
-!/code/src/ignore/event-chatbot-test.ts
 
 !/code/src/ignore/monogo-util-test.ts
 
 !/code/src/ignore/simple-chatbot-test.ts
 
-!/code/src/ignore/tsconfig.json
-/code/src/ignore/monogo-util-test.ts
+!/code/src/ignore/
 /code/src/ignore/event-chatbot-test.ts
+/code/src/ignore/monogo-util-test.ts
 /code/src/ignore/simple-chatbot-test.ts
 /code/src/ignore/tsconfig.json
