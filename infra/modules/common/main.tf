@@ -78,7 +78,8 @@ data "aws_subnets" "selected" {
 
   filter {
     name   = "tag:Name"
-    values = ["*_app2_*"]
+#     values = ["*_app1_*", "*_app2_*", "*_app3_*"]
+    values = ["*_app2_*", "*_app3_*"]
   }
 }
 

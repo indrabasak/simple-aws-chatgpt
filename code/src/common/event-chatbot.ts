@@ -8,6 +8,8 @@ import { QUERY_GENERATION_TEMPLATE, RESPONSE_TEMPLATE } from './templates';
 
 export class EventChatbot {
   private mongoUtil: MongoUtil;
+  private model: AzureChatOpenAI;
+  private queryGenerationPrompt: ChatPromptTemplate;
   private completeChain: RunnableSequence;
 
   constructor(
@@ -39,7 +41,7 @@ export class EventChatbot {
 
       const scope = 'https://cognitiveservices.azure.com/.default';
       const azureADTokenProvider = getBearerTokenProvider(credential, scope);
-      const model = new AzureChatOpenAI({
+      this.model = new AzureChatOpenAI({
         azureADTokenProvider,
         azureOpenAIApiInstanceName: azureOpenAIApiInstanceName,
         azureOpenAIApiDeploymentName: azureOpenAIApiDeploymentName,
@@ -47,11 +49,11 @@ export class EventChatbot {
         temperature: 0,
       });
 
-      const queryGenerationPrompt = ChatPromptTemplate.fromTemplate(QUERY_GENERATION_TEMPLATE);
+      this.queryGenerationPrompt = ChatPromptTemplate.fromTemplate(QUERY_GENERATION_TEMPLATE);
       const queryGeneratorChain = RunnableSequence.from([
         new RunnablePassthrough(),
-        queryGenerationPrompt,
-        model.bind({ stop: ['\nMongoDbResult:'] }),
+        this.queryGenerationPrompt,
+        this.model.bind({ stop: ['\nMongoDbResult:'] }),
         new StringOutputParser(),
       ]);
 
@@ -62,13 +64,32 @@ export class EventChatbot {
           response: async (input) => mongoUtil.aggregate(collection, input.query),
         }),
         responsePrompt,
-        model,
+        this.model,
         new StringOutputParser(),
       ]);
     } catch (error) {
       console.error('Error initializing EventChatbot:', error);
       throw new Error('Failed to initialize EventChatbot');
     }
+  }
+
+  public async testQueryGenPrompt(question: string | null) {
+    let result: string = 'We are unable to answer your question at this time.';
+    try {
+      console.log('-----testQueryGenPrompt-----1');
+      const chain = this.queryGenerationPrompt.pipe(this.model);
+      console.log('-----testQueryGenPrompt-----2');
+      const chainResult = await chain.invoke({
+        question,
+      });
+      console.log('-----testQueryGenPrompt-----3');
+      result = chainResult.content.toString();
+    } catch (error) {
+      console.error('Error running EventChatbot:', error);
+      throw new Error('Failed to run EventChatbot');
+    }
+
+    return result;
   }
 
   public async answerQuestion(question: string | null): Promise<string> {

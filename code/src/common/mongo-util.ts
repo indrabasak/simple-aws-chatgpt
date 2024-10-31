@@ -71,6 +71,39 @@ export class MongoUtil {
     return result;
   }
 
+  async findOne(collection: string, filter: any) {
+    if (!this.db) {
+      await this.connect();
+    }
+
+    let statusCode = 200;
+    let message = `Read data from ${collection} collection was successful.`;
+    let result = null;
+
+    try {
+      // @ts-expect-error the db might not be initialized
+      const col = this.db.collection(collection);
+      result = await col.findOne(filter);
+      logger.debug('Read from database without error', { result });
+      if (result === null) {
+        message = `No record was found in ${collection} collection.`;
+        statusCode = 400;
+      } else {
+        logger.info(message, { result });
+      }
+    } catch (e) {
+      message = `Encountered error while trying to read with the following criteria: ${filter}`;
+      logger.error(message, { error: e });
+      statusCode = 400;
+    }
+
+    return {
+      statusCode,
+      message,
+      result,
+    };
+  }
+
   async close() {
     if (this.client) {
       await this.client.close();
