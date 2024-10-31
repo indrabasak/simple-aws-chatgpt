@@ -1,3 +1,9 @@
+/**
+ * This file contains the templates for the question, query, and response.
+ *
+ * @author Indra Basak
+ * @since 2024-10-29
+ */
 export const QUERY_GENERATION_TEMPLATE: string = `
   You are a data analyst, and you have been asked to write a MongoDB aggregation pipeline query to answer the user's 
   question. Your query should be strictly based on the MongoDB schema provided below.

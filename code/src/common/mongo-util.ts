@@ -1,8 +1,16 @@
-import { Db, MongoClient } from 'mongodb';
-import { appLogger } from './logger';
-import fs from 'node:fs';
+/**
+ * The class provides methods to connect to a MongoDB instance, execute
+ * aggregation queries, and find a single document in a collection.
+ *
+ * @author Indra Basak
+ * @since 2024-10-31
+ */
 
-const logger = appLogger().createChild();
+import { Db, MongoClient } from 'mongodb';
+import fs from 'node:fs';
+import { AppLogger } from './logger';
+
+const logger = AppLogger.getInstance();
 logger.appendKeys({ executor: 'common/mongo-util' });
 
 export class MongoUtil {
@@ -11,6 +19,17 @@ export class MongoUtil {
   private client: MongoClient | undefined;
   private db: Db | undefined;
 
+  /**
+   * Constructor to initialize the MongoDB connection.
+   *
+   * @param host  mongoDB host
+   * @param port  mongoDB port
+   * @param queryStr  mongoDB query string
+   * @param dbName mongoDB database name
+   * @param certPath mongoDB certificate path
+   * @param user mongoDB user
+   * @param pwd mongoDB password
+   */
   constructor(
     host: string,
     port: number,
@@ -38,12 +57,21 @@ export class MongoUtil {
     this.url = `mongodb://${userNameEncoded}:${pwdEncoded}@${host}:${port}?${queryStr}&tlsCAFile=${certPath}`;
   }
 
+  /**
+   * Connect to the MongoDB instance.
+   */
   async connect() {
     this.client = await MongoClient.connect(this.url);
     await this.client.connect();
     this.db = this.client.db(this.dbName);
   }
 
+  /**
+   * Execute an aggregation query.
+   *
+   * @param collection collection name
+   * @param pipeline aggregation pipeline
+   */
   async aggregate(collection: string, pipeline: any[]): Promise<any[]> {
     if (!this.db) {
       await this.connect();
@@ -71,6 +99,12 @@ export class MongoUtil {
     return result;
   }
 
+  /**
+   * Find a single document in a collection.
+   *
+   * @param collection collection name
+   * @param filter filter criteria
+   */
   async findOne(collection: string, filter: any) {
     if (!this.db) {
       await this.connect();
@@ -104,6 +138,9 @@ export class MongoUtil {
     };
   }
 
+  /**
+   * Close the MongoDB connection.
+   */
   async close() {
     if (this.client) {
       await this.client.close();
