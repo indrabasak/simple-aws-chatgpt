@@ -4,7 +4,6 @@ import { SecretUtil } from '../common/secret-util';
 import { MongoUtil } from '../common/mongo-util';
 import { EventChatbot } from '../common/event-chatbot';
 import axios from 'axios';
-import { SimpleChatbot } from '../common/simple-chatbot';
 
 const logger = appLogger();
 
@@ -30,11 +29,6 @@ export const handler: APIGatewayProxyHandler = async (
       dbDevSecret.DB_PWD,
     );
     await mongoUtil.connect();
-
-    const result = await mongoUtil.findOne(dbDevSecret.DB_COLLECTION_EVENT, {
-      'sage-id': 'sage-076d5b76-6900-4e9d-8b35-782a2ba9bf5c',
-    });
-    console.log(result);
 
     const openaiSecret = await SecretUtil.getSecret(process.env.OPENAI_SECRET as string);
     bot = new EventChatbot(
@@ -62,25 +56,12 @@ export const handler: APIGatewayProxyHandler = async (
     console.error(error);
   }
 
-  const openaiSecret = await SecretUtil.getSecret(process.env.OPENAI_SECRET as string);
-  const token = await SimpleChatbot.getAzureToken(
-      openaiSecret.AZURE_TENANT_ID,
-      openaiSecret.AZURE_CLIENT_ID,
-      openaiSecret.AZURE_CLIENT_SECRET,
-  );
-  console.log(token);
-
-  const message = await SimpleChatbot.getCannedAnswer(token, 'What is the purpose of the AI assistant?');
-  console.log(message);
-
   const payload = event.body ? JSON.parse(event.body) : null;
   console.log(payload);
   let answer = 'We are unable to answer your question at this time. - 2';
-  const result2 = await bot.testQueryGenPrompt('How many events of offering type integration?');
-  console.log(result2);
-  // if (payload && payload.question) {
-  //   answer = await bot.answerQuestion(payload.question);
-  // }
+  if (payload && payload.question) {
+    answer = await bot.answerQuestion(payload.question);
+  }
 
   return {
     statusCode: 200,
