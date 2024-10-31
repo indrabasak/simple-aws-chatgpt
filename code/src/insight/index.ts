@@ -44,18 +44,6 @@ export const handler: APIGatewayProxyHandler = async (
     );
   }
 
-  try {
-    const response = await axios.get('https://api.github.com/users/mapbox');
-    console.log(response.data);
-    console.log(response.status);
-    console.log(response.statusText);
-    console.log(response.headers);
-    console.log(response.config);
-  } catch (error) {
-    // Handle error
-    console.error(error);
-  }
-
   const payload = event.body ? JSON.parse(event.body) : null;
   console.log(payload);
   let answer = 'We are unable to answer your question at this time. - 2';
