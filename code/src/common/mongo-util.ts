@@ -91,9 +91,11 @@ export class MongoUtil {
         const doc = await cursor.next();
         result.push(doc);
       }
+      logger.info('*** result retrieved from the database without error');
+      console.log(result);
+      console.log('---------------------------');
     } catch (e) {
-      console.log(e);
-      console.log('Encountered error while retrieving results');
+      logger.error( `Encountered error while retrieving results`, { error: e });
     }
 
     return result;
@@ -118,7 +120,7 @@ export class MongoUtil {
       // @ts-expect-error the db might not be initialized
       const col = this.db.collection(collection);
       result = await col.findOne(filter);
-      logger.debug('Read from database without error', { result });
+      logger.info('Read from database without error', { result });
       if (result === null) {
         message = `No record was found in ${collection} collection.`;
         statusCode = 400;

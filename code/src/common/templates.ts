@@ -29,7 +29,7 @@ export const QUERY_GENERATION_TEMPLATE: string = `
     - **payload**: the payload of the event. A payload of an event may have the following fields which can used during the query generation:
       - **id**: the unique identifier of the payload
       - **time**: the timestamp of the event originally created by the producer
-      - **data**: the data of the event. Th event data can have the following fields:
+      - **data**: the data of the event. The event data can have the following fields:
         - **offeringId**: an offering ID
         - **invoiceNumber**: an invoice number
     - **status**: the status of the event. The status can be one of the following values: 
@@ -43,13 +43,13 @@ export const QUERY_GENERATION_TEMPLATE: string = `
 
   Note the following:
     - The table contains data for events that have occurred in the past.
+    - Every MongoDB pipeline query must strictly include a $match stage that exclude rule named "rule-default". Failure to comply will result in penalties.
     - 'o2pcoop' is same as 'o2p'
     - when the source is 'o2p', it should be considered as 'o2pcoop'
     - 'cf' is abbreviation of Core Finance
     - Failed events are events with state such as 'SAGE_DELIVERY_FAILURE' or 'TARGET_DELIVERY_FAILURE'.
     - Successful events are events with state such as 'SAGE_DELIVERY_SUCCESSFUL' or 'TARGET_DELIVERY_SUCCESSFUL'.
     - Target is same as destination.
-    - Always ignore rules named 'rule-default'
     - Always sort the events by updated-time in descending order.
     - Always add the limit size of 50
     - The 'updated-time' and 'creation-time' fields are MongoDB Date objects.
@@ -71,9 +71,10 @@ export const QUERY_GENERATION_TEMPLATE: string = `
   MongoDB Query: 
     `;
 
-export const RESPONSE_TEMPLATE: string = `Based on the collection schema below, question, MongoDB aggregation 
-  pipeline query, and MongoDB response, write a natural language response and format
-  the result as table if there is more than 1.
+export const OLD_RESPONSE_TEMPLATE: string = `Based on the collection schema below, question, 
+  MongoDB aggregation pipeline query, and MongoDB response, write a natural language response and format
+  the result as table if there is more than 1. The payload should never be displayed as a table. The
+  payload should be displayed as a formatted string.
   
   Note the following:
     - When the MongoDB response is empty, answer 'No data found'.
@@ -82,3 +83,17 @@ export const RESPONSE_TEMPLATE: string = `Based on the collection schema below, 
   Question: {question}
   MongoDB Query: {query}
   MongoDB Response: {response}`;
+
+export const RESPONSE_TEMPLATE: string = `
+  Based on the collection schema, question, MongoDB query, and MongoDB response provided, 
+  write a natural language response. Follow these guidelines:
+
+  - If the MongoDB response contains more than one entry, format the result as a table.
+  - The payload should never be displayed as a table. Instead, display it as a formatted JSON string.
+  - If the MongoDB response is empty, respond with "No data found."
+  - Remove any duplicate entries from the response before formatting, unless the entries contain payloads.
+  
+  Question: {question}
+  MongoDB Query: {query}
+  MongoDB Response: {response}
+`;

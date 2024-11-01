@@ -3,6 +3,11 @@ Simple AWS ChatGPT
 **Simple AWS ChatGPT** is a project that demonstrates the integration of ChatGPT with AWS Lambda and API Gateway. 
 It provides a serverless architecture for deploying a chatbot using AWS services.
 
+The primary goal of the ChatBot is to generate a DocumentDB query from user input and return the response 
+in natural language.
+
+![](./img/simple-aws-chat-arch.svg)
+
 ### Key Features
   - **Chatbot Integration**: Utilizes OpenAI's GPT-3 model for generating responses to user queries. It takes 
     advantage of the `LangchainJs` library to interact with the OpenAI API.
