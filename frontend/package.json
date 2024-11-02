@@ -1,0 +1,44 @@
+{
+  "name": "simple-aws-chatgpt-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Simple AWS Chatbot",
+  "repository": "https://github.com/indrabasak/simple-aws-chatgpt",
+  "author": "indra.basak1@gmail.com",
+  "license": "ISC",
+  "browser": "src/index.tsx",
+  "scripts": {
+    "start": "webpack serve --mode development --open",
+    "build": "webpack --mode production",
+    "lint": "eslint src/**/*.tsx",
+    "lint:fix": "eslint src/**/*.tsx --fix"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-react": "^7.25.9",
+    "@babel/preset-typescript": "^7.26.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.12.2",
+    "@typescript-eslint/parser": "^8.12.2",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^9.2.1",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "eslint-plugin-react": "^7.37.2",
+    "jest": "^29.7.0",
+    "postcss": "^8.4.47",
+    "postcss-loader": "^8.1.1",
+    "source-map-loader": "^5.0.0",
+    "typescript": "^5.6.3",
+    "webpack": "^5.96.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.1.0"
+  }
+}

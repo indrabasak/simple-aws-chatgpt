@@ -12,8 +12,7 @@
     "build:layer": "mkdir -p dist/lambda-functions/layer/nodejs && cp package.json yarn.lock dist/lambda-functions/layer/nodejs && cd dist/lambda-functions/layer/nodejs && yarn install --prod --frozen-lockfile",
     "lint": "eslint src/**/*.ts",
     "lint:fix": "eslint src/**/*.ts --fix",
-    "test": "jest --silent --coverage",
-    "local:exceptions": "tsx src/exceptions/local.ts"
+    "test": "jest --silent --coverage"
   },
   "jestSonar": {
     "reportPath": "test-reports",

@@ -95,7 +95,7 @@ export class MongoUtil {
       console.log(result);
       console.log('---------------------------');
     } catch (e) {
-      logger.error( `Encountered error while retrieving results`, { error: e });
+      logger.error(`Encountered error while retrieving results`, { error: e });
     }
 
     return result;
