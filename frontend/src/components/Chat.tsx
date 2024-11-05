@@ -1,23 +1,24 @@
 import React, {useState} from 'react';
 import Navbar from './layout/Navbar';
 import Card from './layout/Card';
+import {EXAMPLE_QUESTIONS} from './layout/Examples';
+import Response from './layout/Response';
+import Disclaimer from "./layout/Disclaimer";
+import useChatStore from "../store/chat-store";
+import logo from "../assets/logo.png";
 
 const Chat: React.FC = () => {
     const [width, setWidth] = useState(false);
+    const processing = useChatStore((state) => state.processing);
 
     const adjustWidth = () => {
         setWidth(!width);
     };
 
-    const [questions, setQuestions] = useState([
-        "Explain me Product Delivery Excellence like I am a 5 year old kid?",
-        "Can you tell me something about ESAE Services Engineering Team?",
-        "Explain me how many teams work under ESAE?",
-        "I am a new at Autodesk, Explain me the onboarding steps.",
-    ]);
- return (
+    const [questions, setQuestions] = useState(EXAMPLE_QUESTIONS);
+    return (
         <div>
-            <Navbar />
+            <Navbar/>
             <div className="h-screen flex ">
                 <div
                     className={` ${
@@ -35,34 +36,27 @@ const Chat: React.FC = () => {
                         width ? "w-[85%]" : "w-[96%]"
                     } flex flex-col transition-all duration-500 ease-in-out`}
                 >
-                    <div
-                        className="bg-blue-100 w-[90%] py-4  mx-auto mt-14 border border-blue-300 rounded-lg flex justify-center">
-                        <p className="font-medium  font-chat">
-                            Disclaimer: Response by Knowledge Centre (KC) is AI Generated & can be incorrect sometimes.
-                        </p>
-                    </div>
+
                     <div className="w-full h-full mx-auto px-6 py-1 mt-16 lg:px-6  ">
-                        {/*{isGeneratingResponse ? (*/}
-                        {/*    <>*/}
-                        {/*        <Response/>*/}
-                        {/*    </>*/}
-                        {/*) : (*/}
+                        {processing ? (
                             <>
-                                <div className="max-w-7xl mx-auto px-3 py-3 mt-22   justify-center items-center flex  ">
-                                    {/*<img src={logo} alt="" className="lg:h-20 h-12"/>*/}
-                                </div>
-
-                                {/*<Greeting username="Vishal"/>*/}
-
-                                <div className="flex max-w-7xl mx-auto  justify-center mt-10">
-                                    <div className="flex flex-col md:flex-row max-w-2xl gap-3 ">
-                                        {questions.map((question, index) => {
-                                            return <Card key={index} question={question}/>;
-                                        })}
-                                    </div>
-                                </div>
+                                {<Response/>}
                             </>
-                        {/*)}*/}
+                        ) : (
+                        <>
+                            <div className="max-w-7xl mx-auto px-3 py-3 mt-22   justify-center items-center flex  ">
+                                {<img src={logo} alt="" className="lg:h-20 h-12"/>}
+                            </div>
+
+                            <div className="flex max-w-7xl mx-auto  justify-center mt-10">
+                                <div className="flex flex-col md:flex-row max-w-2xl gap-3 ">
+                                    {questions.map((question, index) => {
+                                        return <Card key={index} question={question}/>;
+                                    })}
+                                </div>
+                            </div>
+                        </>
+                        )}
 
                         {/*<div className="flex max-w-7xl mx-auto items-center justify-center w-full sticky bottom-0 z-2 ">*/}
                         {/*    <SearchBar/>*/}
@@ -70,8 +64,9 @@ const Chat: React.FC = () => {
                     </div>
                 </div>
             </div>
+            <Disclaimer/>
         </div>
- );
+    );
 }
 
 export default Chat;

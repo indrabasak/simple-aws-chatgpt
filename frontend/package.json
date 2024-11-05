@@ -9,12 +9,15 @@
   "scripts": {
     "start": "webpack serve --mode development --open",
     "build": "webpack --mode production",
-    "lint": "eslint src/**/*.tsx",
-    "lint:fix": "eslint src/**/*.tsx --fix"
+    "lint": "eslint 'src/**/*.{ts,tsx,js,jsx}'",
+    "lint:fix": "eslint 'src/**/*.{ts,tsx,js,jsx}' --fix"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-spinners": "^0.14.1",
+    "react-typewriter-effect": "^1.1.0",
+    "zustand": "^5.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -24,6 +27,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
+    "@types/react-typing-effect": "^2.0.7",
     "@typescript-eslint/eslint-plugin": "^8.12.2",
     "@typescript-eslint/parser": "^8.12.2",
     "autoprefixer": "^10.4.20",
