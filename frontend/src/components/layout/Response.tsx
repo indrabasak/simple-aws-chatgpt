@@ -14,16 +14,24 @@ const Response: React.FC = () => {
                     <div className="max-w-2xl mx-auto py-3 lg:px-3 flex justify-end">
                         <div className="bg-gray-100 p-3 rounded-xl mr-3">
                             {curr.request}
+                            <>
+                                {console.log('1 - $$$$$$$$$$$$$$$$$')}
+                                {console.log(curr.request)}
+                            </>
                         </div>
                         <div className="bg-gray-300 rounded-full text-center h-12 w-12 px-2 py-3 flex-shrink-0">
-                            U
+                            Q.
                         </div>
                     </div>
                     <div className="max-w-2xl mx-auto px-3 py-3 mt-2 lg:px-3 lg:mt-2 flex gap-6 pb-10 justify-start">
                         <div className="rounded-full text-center h-12 w-12 bg-black py-3 px-3 flex-shrink-0">
                             <img src={logo} alt=""/>
                         </div>
-                        <div className="mr-6 text-justify bg-gray-100 p-6 rounded-xl ">
+                        <>
+                            {console.log('2 - $$$$$$$$$$$$$$$$$')}
+                            {console.log(curr.response)}
+                        </>
+                        <div className="mr-6 text-justify bg-gray-100 p-6 rounded-xl">
                             {curr.response ? (<TypeWriterEffect
                                 startDelay={100}
                                 cursorColor="black"
@@ -33,7 +41,7 @@ const Response: React.FC = () => {
                         </div>
                     </div>
                 </div>
-            ))};
+            ))}
         </div>
     );
 }

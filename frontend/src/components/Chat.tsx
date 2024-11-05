@@ -40,10 +40,14 @@ const Chat: React.FC = () => {
                     <div className="w-full h-full mx-auto px-6 py-1 mt-16 lg:px-6  ">
                         {processing ? (
                             <>
-                                {<Response/>}
+                                {console.log('1 -----------------------------------------------------')}
+                                {console.log(processing)}
+                                <Response/>
                             </>
                         ) : (
                         <>
+                            {console.log('2 -----------------------------------------------------')}
+                            {console.log(processing)}
                             <div className="max-w-7xl mx-auto px-3 py-3 mt-22   justify-center items-center flex  ">
                                 {<img src={logo} alt="" className="lg:h-20 h-12"/>}
                             </div>
