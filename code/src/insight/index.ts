@@ -61,10 +61,10 @@ export const handler: APIGatewayProxyHandler = async (
   if (payload && payload.question) {
     answer = await bot.answerQuestion(payload.question);
   }
-
+  console.log(answer);
   return {
     statusCode: 200,
     body: answer,
-    headers: { 'Content-Type': 'application/text' },
+    headers: { 'Content-Type': 'application/text', 'Access-Control-Allow-Origin' : '*' },
   };
 };
