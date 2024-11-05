@@ -65,6 +65,6 @@ export const handler: APIGatewayProxyHandler = async (
   return {
     statusCode: 200,
     body: answer,
-    headers: { 'Content-Type': 'application/text' },
+    headers: { 'Content-Type': 'application/text', 'Access-Control-Allow-Origin' : '*' },
   };
 };
