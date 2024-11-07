@@ -193,3 +193,6 @@ dist
 /code/src/ignore/monogo-util-test.ts
 /code/src/ignore/simple-chatbot-test.ts
 /code/src/ignore/tsconfig.json
+
+.DS_Store
+.yarn

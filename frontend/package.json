@@ -14,9 +14,13 @@
     "lint:fix2": "eslint --config=.eslint.config.cjs --ext=.ts,.tsx --format=table --fix .; npx prettier --config=.prettierrc --write '**/*.{yml,yaml,json}'"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
+    "@fortawesome/react-fontawesome": "^0.2.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-spinners": "^0.14.1",
+    "react-tooltip": "^5.28.0",
     "react-typewriter-effect": "^1.1.0",
     "zustand": "^5.0.1"
   },
@@ -51,5 +55,6 @@
     "webpack": "^5.96.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
-  }
+  },
+  "packageManager": "yarn@4.5.1"
 }

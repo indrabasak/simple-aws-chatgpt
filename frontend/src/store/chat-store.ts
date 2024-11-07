@@ -1,33 +1,54 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
 
-interface StoreState {
-    processing: boolean;
-    setProcessing: (newProcessing: boolean) => void;
-    isProcessing: () => boolean;
-
-    history: ({ request: string; response: null|string; })[];
-    clearHistory: () => void;
-    setRequest: (request: string) => void;
-    setResponse: (response: string) => void;
+interface Response {
+  request: string;
+  response: string | null;
 }
 
-const useChatStore = create<StoreState>((set, get) => ({
-    processing: false,
-    setProcessing: (newProcessing: boolean) => set({ processing: newProcessing }),
-    isProcessing: () => get().processing,
+interface ChatState {
+  value: string;
+  setValue: (newValue: string) => void;
+  isGeneratingResponse: boolean;
+  setIsGeneratingResponse: (newVal: boolean) => void;
+  responses: Response[];
+  setRequest: (request: string) => void;
+  setResponse: (index: number, response: string) => void;
+  cardData: string;
+  setCardData: (newVal: string) => void;
+  isTyping: boolean;
+  setIsTyping: (newVal: boolean) => void;
+  showExamples: boolean;
+  toggleShowExamples: () => void;
+  hasResponse: boolean;
+  setHasResponse: (newVal: boolean) => void;
+}
 
-    history: [],
-    clearHistory: () => set({ history: [] }),
-    setRequest: (request: string) => set((state) => ({
-        history: [...state.history, { request: request, response: null }]
+const useChatStore = create<ChatState>((set) => ({
+  value: '',
+  setValue: (newValue) => set((state) => ({ value: newValue })),
+  isGeneratingResponse: false,
+  setIsGeneratingResponse: (newVal) =>
+    set(() => ({ isGeneratingResponse: newVal })),
+  responses: [],
+  setRequest: (request) =>
+    set((state) => ({
+      responses: [...state.responses, { request: request, response: null }],
     })),
-    setResponse: (response: string) => set((state) => {
-        console.log('------------- setResponse --------------');
-        const prevData: any = [...state.history];
-        const index: number = prevData.length;
-        prevData[index - 1] = { ...prevData[index - 1], response: response };
-        return { history: prevData };
+  setResponse: (index, response) =>
+    set((state) => {
+      const prevData = [...state.responses];
+      prevData[index].response = response;
+      return { responses: prevData };
     }),
+  cardData: '',
+  setCardData: (newVal) => set(() => ({ cardData: newVal })),
+  isTyping: false,
+  setIsTyping: (newVal) => set(() => ({ isTyping: newVal })),
+  showExamples: true,
+  toggleShowExamples: () =>
+    set((state) => ({ showExamples: !state.showExamples })),
+  hasResponse: false,
+  setHasResponse: (newVal) => set(() => ({ hasResponse: newVal })),
 }));
 
 export default useChatStore;
