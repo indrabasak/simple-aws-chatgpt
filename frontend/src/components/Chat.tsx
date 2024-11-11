@@ -15,11 +15,18 @@ const ChatUI: React.FC = () => {
   const showExamples = useChatStore((state) => state.showExamples);
   const hasResponse = useChatStore((state) => state.hasResponse);
   const [questions, setQuestions] = useState<string[]>([
-    'List the source and destinations of failed events?',
-    'How many events are there today?',
-    'What is the status of sage id <SAGE-ID>?',
-    'How many events of type offering exists in last 7 days?',
-    'How many failed events are today?',
+    'List the source and destinations of failed events',
+    'How many events are there today',
+    'What is the status of sage id <SAGE-ID>',
+    'How many events of type offering exists in last 7 days',
+    'How many failed events are today',
+    'Give me the payload of sage id <SAGE-ID>',
+    'Get the top 2 events created today, including the sage ID and status in the output',
+    'When the event of sage id <SAGE-ID> was created',
+    'Get the status and target of event sage-5e48c172-5dab-4cfc-b668-e5240eb28408',
+    'What is the sage id of offering <OFFERING-ID>',
+    'What is the integration type of event <SAGE-ID>',
+    'Whats the retry count of event <SAGE-ID>',
   ]);
 
   return (

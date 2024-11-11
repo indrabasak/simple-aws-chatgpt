@@ -12,7 +12,7 @@ interface ResponseItem {
 
 const Response: React.FC = () => {
   const responses = useChatStore((state) => state.responses as ResponseItem[]);
-
+  
   return (
     <div className="mt-8 overflow-y-auto h-[77vh]">
       {responses.map((curr, index) => (
@@ -27,9 +27,13 @@ const Response: React.FC = () => {
               <FontAwesomeIcon icon={faRobot} />
             </div>
 
-            <div className="text-justify bg-gray-100 p-6 rounded-xl whitespace-pre-wrap">
-              {curr.response ? <>{curr.response}</> : <BarLoader />}
-            </div>
+            <div className="text-justify bg-gray-100 p-6 rounded-xl overflow-x-auto">
+            {curr.response ? (
+              <div dangerouslySetInnerHTML={{ __html: curr.response }} />
+            ) : (
+              <BarLoader />
+            )}
+          </div>
           </div>
         </div>
       ))}
