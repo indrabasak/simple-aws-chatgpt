@@ -111,15 +111,32 @@ azure_tenant_id=REPLACE_ME_WITH_AZURE_TENANT_ID
 azure_client_id=REPLACE_ME_WITH_AZURE_CLIENT_ID
 azure_client_secret=REPLACE_ME_WITH_AZURE_CLIENT_SECRET
 ```
-  2. **Configure Environment Variables**: Set up the necessary environment variables for AWS credentials and region 
-     in the project home directory.
-     The following AWS environment variables are expected:
-     ```bash
-     export AWS_ACCESS_KEY_IDd="<AWS_ACCESS_KEY_ID>"
-     export AWS_SECRET_ACCESS_KEY="<AWS_SECRET_ACCESS_KEY>"
-     export AWS_SESSION_TOKEN="<AWS_SESSION_TOKEN>"
-     export AWS_DEFAULT_REGION="<AWS_DEFAULT_REGION>"
- 3.**Deploy Infrastructure**: Create the necessary AWS resources by executing the `setup.sh deploy` script from the 
+ 2. **Configure Environment Variables**: Set up the necessary environment variables for AWS credentials and region 
+   in the project home directory.
+   The following AWS environment variables are expected:
+   ```bash
+   export AWS_ACCESS_KEY_IDd="<AWS_ACCESS_KEY_ID>"
+   export AWS_SECRET_ACCESS_KEY="<AWS_SECRET_ACCESS_KEY>"
+   export AWS_SESSION_TOKEN="<AWS_SESSION_TOKEN>"
+   export AWS_DEFAULT_REGION="<AWS_DEFAULT_REGION>"
+   ```
+
+ 3. **Deploy Infrastructure**: Create the necessary AWS resources by executing the `setup.sh deploy` script from the 
       project home directory.
+      
+## Frontend
+The frontend UI is built using React and provides a simple interface for interacting with the chatbot. To start the UI,
+navigate to the `frontend` directory and execute the following commands:
+
+```bash  
+yarn install
+yarn start
+```    
+
+The application will start up at port 9000. You can access the UI by clicking the following link, : http://localhost:9000/
+![](./img/insight-ui.png)
+
+Please make sure you have the latest version of Yarn installed on your machine, i.e., 4.5.1 or higher.
+
 
  
