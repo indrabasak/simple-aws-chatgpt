@@ -32,6 +32,8 @@ export const QUERY_GENERATION_TEMPLATE: string = `
       - **data**: the data of the event. The event data can have the following fields:
         - **offeringId**: an offering ID
         - **invoiceNumber**: an invoice number
+        - **quote**: a quote contains following fields:
+          - **quoteNumber**: a quote number
     - **status**: the status of the event. The status can be one of the following values: 
       - 'SAGE_DELIVERY_SUCCESSFUL'
       - 'SAGE_DELIVERY_FAILURE'
@@ -88,7 +90,7 @@ export const RESPONSE_TEMPLATE: string = `
   Based on the collection schema, question, MongoDB query, and MongoDB response provided, 
   write a natural language response. Follow these guidelines:
 
-  - If the MongoDB response contains more than one entry, format the result as a table.
+  - If the MongoDB response contains more than one entry, format the result as a html table of class custom-table.
   - The payload should never be displayed as a table. Instead, display it as a formatted JSON string.
   - If the MongoDB response is empty, respond with "No data found."
   - Remove any duplicate entries from the response before formatting, unless the entries contain payloads.
