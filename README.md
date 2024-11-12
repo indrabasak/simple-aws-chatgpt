@@ -6,16 +6,42 @@ It provides a serverless architecture for deploying a chatbot using AWS services
 The primary goal of the ChatBot is to generate a DocumentDB query from user input and return the response 
 in natural language.
 
-![](./img/simple-aws-chat-arch.svg)
+### Design
+Many `text-to-SQL` tools convert natural language questions into SQL queries, but none exist for MongoDB. 
+This example project experimented with `text-to-MQL` (MongoDB Query Language) following the same philosophy as text-to-SQL.
+In our design, we adopted a `zero-shot prompt` approach to train our LLM model. We supplied the model with descriptions 
+of various fields in the event schema without including the actual event JSON schema. Additionally, we provided notes 
+outlining possible attribute values, assumptions to consider, and pitfalls to avoid. We also included notes for our 
+LLM model to process DocumentDB responses into concise and easily understandable natural language.
 
-### Key Features
-  - **Chatbot Integration**: Utilizes OpenAI's GPT-3 model for generating responses to user queries. It takes 
+![](./img/text-mql.svg)
+
+Here is an overview of a typical sequence: A user poses a question to this AI assistant in natural language, 
+such as, "How many events have we witnessed today?" The application converts the question into a prompt and forwards 
+it to the trained LLM model. The LLM model generates an MQL query, which is then executed against DocumentDB. The 
+DocumentDB response is subsequently processed by the LLM to produce a natural language answer. The answer is then 
+returned to the user.
+
+Key points of our design include the following:
+ - Utilizing DocumentDB as our database
+ - Employing zero-shot prompts and GPT-3.5
+ - Ensuring that both questions and answers are in natural language.
+
+### Architecture
+This application is built using AWS serverless services such as API Gateway and Lambda. The language of choice 
+is TypeScript. It leverages LangChain for interaction with the LLM and utilizes React as the UI framework. 
+Terraform is employed for infrastructure as code (IaC).
+
+![](./img/simple-aws-chat-arch.v2.svg)
+
+#### Key Features
+  - **Chatbot Integration**: Utilizes OpenAI's GPT-3.5 model for generating responses to user queries. It takes 
     advantage of the `LangchainJs` library to interact with the OpenAI API.
   - **Serverless Architecture**: Utilizes AWS Lambda for running the chatbot logic and API Gateway for handling HTTP requests.
   - **Environment Configuration**: Requires setting up specific environment variables for AWS credentials and region.
   - **Infrastructure as Code**: Uses Terraform for provisioning and managing AWS infrastructure.
 
-### Chatbot Logic
+#### Chatbot Logic
 The chatbot logic in this project is implemented using AWS Lambda and integrates with Azure OpenAI services. 
 Here is a brief overview of the key components and their roles:
 
@@ -51,7 +77,7 @@ and managed services.
 
 ## Build
   1. **Clone Repository**: Clone the repository to your local machine.
-  2. **Install Dependencies**: Install the required JavaScript dependencies by executing `yarn isntall` from the 
+  2. **Install Dependencies**: Install the required JavaScript dependencies by executing `yarn install` from the 
      `code` directory.
   3. **Build Distribution**: Execute the following command `yarn dist:insight`.
 
